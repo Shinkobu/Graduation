@@ -8,6 +8,11 @@ public class Dog extends DomesticAnimal {
         super(name, dateOfBirth);
     }
 
+    String className = "Собака";
+
+    public String getClassName() {
+        return className;
+    }
     HashMap<String,String> commandsMap = new HashMap<>(){{
         put("Ко мне", "Собака бежит к хозяину");
         put("Голос", "Гав-гав");

@@ -8,6 +8,12 @@ public class Horse extends BaggageAnimal{
         super(name, dateOfBirth);
     }
 
+    String className = "Лошадь";
+
+    public String getClassName() {
+        return className;
+    }
+
     HashMap<String, String> commandsMap = new HashMap<>() {{
         put("Прыжок", "Лошадь прыгает");
         put("Вперёд", "Лошадь идёт вперёд");
