@@ -53,7 +53,7 @@ public class Controller {
     }
 
 
-    public static void newAnimal() {
+    public static void newAnimal() throws IOException {
 
         Scanner myScan = new Scanner(System.in);
         System.out.println("Введите кличку животного: \n");
@@ -103,7 +103,6 @@ public class Controller {
 
         Database.showDB();
 
-
     }
 
     public static Date DataReader(String rawDate) {
@@ -119,7 +118,7 @@ public class Controller {
             tempDate = df.parse(rawDate);
         } catch (NumberFormatException | ParseException ignored) {
             System.out.println("Ошибка распознавания даты, попробуйте ещё раз");
-            DataReader("");
+             tempDate = DataReader("");
         }
         return tempDate;
     }

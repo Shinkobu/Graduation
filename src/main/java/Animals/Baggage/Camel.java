@@ -8,6 +8,11 @@ public class Camel extends BaggageAnimal{
         super(name, dateOfBirth);
     }
 
+    String className = "Верблюд";
+
+    public String getClassName() {
+        return className;
+    }
     HashMap<String,String> commandsMap = new HashMap<>(){{
         put("Лежать", "Верблюд садится");
         put("Вперёд", "Верблюд идёт вперёд");
