@@ -1,17 +1,14 @@
 import Animals.Animal;
-import Animals.Baggage.BaggageAnimal;
 import Animals.Baggage.Camel;
 import Animals.Baggage.Donkey;
 import Animals.Baggage.Horse;
 import Animals.Domestic.Cat;
 import Animals.Domestic.Dog;
-import Animals.Domestic.DomesticAnimal;
 import Animals.Domestic.Hamster;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class App {
     public static void main(String[] args) throws ParseException, IOException {
@@ -42,7 +39,7 @@ public class App {
         Database.putData(bucefal);
         Database.putData(pegas);
 
-        Controller.run();
+        Controller.mainMenuRun();
 
     }
 }

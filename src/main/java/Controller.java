@@ -10,20 +10,19 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Controller {
 
-    public static int menu() {
+    public static int mainMenu() {
 
         System.out.println("\nВыберите действие\n");
         Scanner myScan = new Scanner(System.in);
         System.out.println("Введите желаемую операцию:\n" +
                 "1 - Добавить животное\n" +
                 "2 - Вывести список животных\n" +
-                "3 - Найти животное по кличке\n" +
+                "3 - Информация по животному\n" +
                 "9 - Завершить работу \n");
 
         int choice = 0;
@@ -31,9 +30,40 @@ public class Controller {
         return choice;
     }
 
+    public static void animalMenu(Animal animal) throws IOException {
 
-    public static void run() throws IOException {
-        int choice = menu();
+        System.out.println("\nВыберите действие\n");
+        Scanner myScan = new Scanner(System.in);
+        System.out.println("Введите желаемую операцию:\n" +
+                "1 - Показать умения животного\n" +
+                "2 - Обучить животное новым командам\n" +
+                "9 - В основное меню \n");
+
+        int choice = 0;
+        choice = Integer.parseInt(myScan.nextLine());
+
+        switch (choice) {
+            case 1:
+                for (String name: animal.getCommandsMap().keySet()) {
+                    String key = name.toString();
+                    String value = animal.getCommandsMap().get(name).toString();
+                    System.out.println("Команда: " + key + ". Действие: " + value);
+                }
+                animalMenu(animal);
+                break;
+            case 2:
+//TODO
+                break;
+
+            case 9:
+                mainMenuRun();
+                break;
+        }
+    }
+
+
+    public static void mainMenuRun() throws IOException {
+        int choice = mainMenu();
 
         switch (choice) {
             case 1:
@@ -44,14 +74,15 @@ public class Controller {
                 Database.showDB();
                 break;
             case 3:
+                findAnimalByName();
                 break;
         }
-
         if (choice != 9) {
-            run();
+            mainMenuRun();
+        }else {
+            System.exit(1);
         }
     }
-
 
     public static void newAnimal() throws IOException {
 
@@ -60,7 +91,7 @@ public class Controller {
         String animalName = myScan.nextLine();
 
 
-        Date birthDate = DataReader("");
+        Date birthDate = DateReader("");
 
 
         System.out.println("Выберите вид животного: \n" +
@@ -105,7 +136,32 @@ public class Controller {
 
     }
 
-    public static Date DataReader(String rawDate) {
+    public static void findAnimalByName() throws IOException {
+        Scanner myScan = new Scanner(System.in);
+
+        System.out.println("\nБаза данных имеет вид:\n");
+        Database.showDB();
+
+        System.out.println("Введите имя животного\n");
+        String tempName = myScan.nextLine();
+
+        AnimalsRepository animalsRepository = new AnimalsRepository();
+
+        Animal foundAnimal = animalsRepository.findByName(tempName);
+
+        if (foundAnimal != null) {
+            System.out.println("\nЖивотное " + tempName + " найдено!");
+            System.out.println(foundAnimal.toString());
+            animalMenu(foundAnimal);
+        } else {
+            System.out.println("\nЖивотное " + tempName + " не найдено!");
+            System.out.println("\nБаза данных имеет вид:\n");
+            Database.showDB();
+        }
+
+    }
+
+    public static Date DateReader(String rawDate) {
 
         Scanner dateScanner = new Scanner(System.in);
         System.out.println("Введите дату рождения в формате dd-MM-yyyy: \n");
@@ -118,8 +174,9 @@ public class Controller {
             tempDate = df.parse(rawDate);
         } catch (NumberFormatException | ParseException ignored) {
             System.out.println("Ошибка распознавания даты, попробуйте ещё раз");
-             tempDate = DataReader("");
+            tempDate = DateReader("");
         }
         return tempDate;
     }
+
 }
