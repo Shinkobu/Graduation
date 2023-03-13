@@ -6,29 +6,31 @@ import java.util.List;
 public class AnimalsRepository implements Repository {
     @Override
     public void enterNewAnimal(Animal animal) {
-        Database.putData(animal);
+        Database.addAnimal(animal);
     }
 
     @Override
-    public void newCommand(Animal animal, String command, String action) {
-//TODO
+    public void newCommandAndAction(Animal animal, String command, String action) {
+
+        animal.addCommand(command,action);
+        Database.addCommandAndAction(animal);
     }
 
     public Animal findByName(String nameToFind) {
         List<Animal> tempDB = Database.getDatabase();
         boolean isFound = false;
         Animal tempAnimal = null;
-        Animal foundTask = null;
+        Animal foundAnimal = null;
 
         Iterator<Animal> animalIterator = tempDB.iterator();
-        while(animalIterator.hasNext() && !isFound){
+        while (animalIterator.hasNext() && !isFound) {
             tempAnimal = animalIterator.next();
-            if(tempAnimal.getName().equals(nameToFind)){
+            if (tempAnimal.getName().equals(nameToFind)) {
                 isFound = true;
-                foundTask = tempAnimal;
-
+                foundAnimal = tempAnimal;
+                foundAnimal.setIndexInDb(tempDB.indexOf(tempAnimal));
             }
         }
-        return foundTask;
+        return foundAnimal;
     }
 }

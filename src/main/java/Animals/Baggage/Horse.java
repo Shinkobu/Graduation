@@ -20,6 +20,8 @@ public class Horse extends BaggageAnimal{
         put("Стоп", "Лошадь остановилась");
     }};
 
+
+
     @Override
     public HashMap<String, String> getCommandsMap() {
         return commandsMap;

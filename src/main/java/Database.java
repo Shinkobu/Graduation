@@ -7,8 +7,12 @@ public class Database {
 
     private static final List<Animal> ANIMALS_DATABASE = new ArrayList<>();
 
-    public static void putData(Animal animal) {
+    public static void addAnimal(Animal animal) {
         ANIMALS_DATABASE.add(animal);
+    }
+
+    public static void addCommandAndAction(Animal animal) {
+        ANIMALS_DATABASE.set(animal.getIndexInDb(),animal);
     }
 
     public static void showDB() {

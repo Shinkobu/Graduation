@@ -32,12 +32,12 @@ public class App {
 //        System.out.println(bucefal.getCommandsMap());
 //        System.out.println(pegas.getCommandsMap());
 
-        Database.putData(sava);
-        Database.putData(sharik);
-        Database.putData(mitrich);
-        Database.putData(immanuil);
-        Database.putData(bucefal);
-        Database.putData(pegas);
+        Database.addAnimal(sava);
+        Database.addAnimal(sharik);
+        Database.addAnimal(mitrich);
+        Database.addAnimal(immanuil);
+        Database.addAnimal(bucefal);
+        Database.addAnimal(pegas);
 
         Controller.mainMenuRun();
 
