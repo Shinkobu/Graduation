@@ -44,6 +44,7 @@ public class Controller {
 
         switch (choice) {
             case 1:
+
                 for (String name: animal.getCommandsMap().keySet()) {
                     String key = name.toString();
                     String value = animal.getCommandsMap().get(name).toString();
@@ -52,7 +53,15 @@ public class Controller {
                 animalMenu(animal);
                 break;
             case 2:
-//TODO
+                Scanner myScanner = new Scanner(System.in);
+                System.out.println("Введите команду");
+                String newCommand = myScanner.nextLine();
+                System.out.println("Введите действие животного");
+                String newAction = myScanner.nextLine();
+                AnimalsRepository myAnimalsRepository = new AnimalsRepository();
+                myAnimalsRepository.newCommandAndAction(animal, newCommand, newAction);
+
+                animalMenu(animal);
                 break;
 
             case 9:
@@ -152,6 +161,7 @@ public class Controller {
         if (foundAnimal != null) {
             System.out.println("\nЖивотное " + tempName + " найдено!");
             System.out.println(foundAnimal.toString());
+            int index = foundAnimal.getIndexInDb();
             animalMenu(foundAnimal);
         } else {
             System.out.println("\nЖивотное " + tempName + " не найдено!");
