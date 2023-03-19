@@ -1,0 +1,172 @@
+CREATE DATABASE Друзья_человека
+USE Друзья_человека
+
+CREATE TABLE cats(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+
+INSERT INTO cats (animalName, species, animalType, dateOfBirth, behavior)
+VALUES
+("Sava" , "Кот" , "Домашнее", "2012-01-01", "Сказать кис-кис : Кошка говорит мяу, Дать молока : Кошка пьёт молоко"),
+("Barsik" , "Кот" , "Домашнее", "2021-01-15", "Сказать кис-кис : Кошка говорит мяу, Дать молока : Кошка пьёт молоко");
+
+CREATE TABLE dogs(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+INSERT INTO dogs (animalName, species, animalType, dateOfBirth, behavior)
+VALUES
+("Sharik" , "Собака" , "Домашнее", "2015-01-15", "Ко мне : Собака бежит к хозяину, Голос : Гав-гав"),
+("Dogy" , "Собака" , "Домашнее", "2020-01-15", "Ко мне : Собака бежит к хозяину, Голос : Гав-гав");
+
+CREATE TABLE hamsters(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+
+INSERT INTO hamsters (animalName, species, animalType, dateOfBirth, behavior)
+VALUES
+("Mitrich" , "Хомяк" , "Домашнее", "2020-01-01", "Почесать за ушком : Фыр-фыр, Дать еды : Хомяк ест"),
+("Pipka" , "Хомяк" , "Домашнее", "2021-01-15", "Почесать за ушком : Фыр-фыр, Дать еды : Хомяк ест");
+
+CREATE TABLE camels(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+INSERT INTO camels (animalName, species, animalType, dateOfBirth, behavior)
+VALUES
+("Immanuil" , "Верблюд" , "Вьючное", "2015-01-15", "Лежать : Верблюд садится, Вперёд : Верблюд идёт вперёд"),
+("Kant" , "Верблюд" , "Вьючное", "2017-01-15", "Лежать : Верблюд садится, Вперёд : Верблюд идёт вперёд");
+
+CREATE TABLE donkeys(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+
+INSERT INTO donkeys (animalName, species, animalType, dateOfBirth, behavior)
+VALUES
+("Bucefal" , "Осёл" , "Вьючное", "2012-01-01", "Прыжок : Осёл прыгает, Вперёд : Осёл идёт вперёд"),
+("Arnold" , "Осёл" , "Вьючное", "2019-01-15", "Прыжок : Осёл прыгает, Вперёд : Осёл идёт вперёд");
+
+CREATE TABLE horses(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+
+INSERT INTO horses (animalName, species, animalType, dateOfBirth, behavior)
+VALUES
+("Gavrysha" , "Лошадь" , "Вьючное", "2022-01-01", "Прыжок : Лошадь прыгает, Вперёд : Лошадь идёт вперёд"),
+("Pegas" , "Лошадь" , "Вьючное", "2015-01-15", "Прыжок : Лошадь прыгает, Вперёд : Лошадь идёт вперёд");
+
+CREATE TABLE baggageAnimals(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+INSERT INTO baggageAnimals
+SELECT * from donkeys;
+
+INSERT INTO baggageAnimals
+SELECT * from camels;
+
+INSERT INTO baggageAnimals
+SELECT * from horses;
+
+CREATE TABLE domesticAnimals(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+INSERT INTO domesticAnimals
+SELECT * from cats;
+
+INSERT INTO domesticAnimals
+SELECT * from dogs;
+
+INSERT INTO domesticAnimals
+SELECT * from hamsters;
+
+CREATE TABLE animals(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+INSERT INTO animals
+SELECT * from baggageAnimals;
+
+INSERT INTO animals
+SELECT * from domesticAnimals;
+
+TRUNCATE camels;
+
+CREATE TABLE horsesAndDonkeys(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+INSERT INTO horsesAndDonkeys
+SELECT * from horses;
+
+INSERT INTO horsesAndDonkeys
+SELECT * from donkeys;
+
+TRUNCATE horses;
+TRUNCATE donkeys;
+
+CREATE TABLE youngAnimals(
+animalName CHAR(20) NOT NULL,
+species CHAR(20) NOT NULL,
+animalType CHAR (20) NOT NULL,
+dateOfBirth Date NOT NULL,
+behavior TEXT NOT NULL);
+
+INSERT INTO youngAnimals
+SELECT * from animals WHERE dateOfBirth < DATE_ADD(curdate(), INTERVAL -1 YEAR) AND
+dateOfBirth > DATE_ADD(curdate(), INTERVAL -3 YEAR);
+
+ALTER TABLE youngAnimals ADD COLUMN age CHAR(20) NOT NULL;
+ 
+UPDATE youngAnimals SET age  = (CONCAT(year(curDate()) - year(dateOfBirth), "  лет, ",  month(dateOfBirth), " месяцев")) WHERE LENGTH(age) = 0;
+
+
+SELECT * FROM camels;
+SELECT * FROM baggageAnimals;
+SELECT * FROM domesticAnimals;
+SELECT * FROM animals;
+SELECT * FROM horsesAndDonkeys;
+SELECT * FROM youngAnimals;
+
+
+
+
+
+
+
+
