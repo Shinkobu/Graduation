@@ -53,15 +53,18 @@ public class Controller {
                 animalMenu(animal);
                 break;
             case 2:
-                Scanner myScanner = new Scanner(System.in);
-                System.out.println("Введите команду");
-                String newCommand = myScanner.nextLine();
-                System.out.println("Введите действие животного");
-                String newAction = myScanner.nextLine();
-                AnimalsRepository myAnimalsRepository = new AnimalsRepository();
-                myAnimalsRepository.newCommandAndAction(animal, newCommand, newAction);
+                try (Scanner myScanner = new Scanner(System.in)){
+                    System.out.println("Введите команду");
+                    String newCommand = myScanner.nextLine();
+                    System.out.println("Введите действие животного");
+                    String newAction = myScanner.nextLine();
+                    AnimalsRepository myAnimalsRepository = new AnimalsRepository();
+                    myAnimalsRepository.newCommandAndAction(animal, newCommand, newAction);
 
-                animalMenu(animal);
+                    animalMenu(animal);
+                } catch (RuntimeException e){
+                    e.printStackTrace();
+                }
                 break;
 
             case 9:
@@ -76,7 +79,10 @@ public class Controller {
 
         switch (choice) {
             case 1:
-                newAnimal();
+                try(Counter myCounter = new Counter()){
+                    myCounter.getId();
+//                    newAnimal();
+                }
                 break;
             case 2:
                 System.out.println("\nБаза данных имеет вид:\n");
